@@ -1,0 +1,68 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+h1, h2, h3, h4, h5, h6 {
+  @apply text-gray-500 dark:text-white;  /* Tailwind direkt i CSS */
+}
+
+
+html {
+  scroll-behavior: smooth;
+}
+
+
+
+  .font-body {
+    font-family: 'Roboto', sans-serif;
+  }
+
+  #hero-overlay {
+    background: linear-gradient(90deg, #87cefa, #ffb6c1, #ffe4b5, #87cefa);
+    background-size: 300% 300%;
+    animation: gradientSweep 8s ease infinite;
+    transition: opacity 0.6s ease;
+    z-index: 10;
+  }
+  
+  @keyframes gradientSweep {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+
+  #parallax-inner {
+    z-index: 0;
+    pointer-events: none; /* så den inte blockerar kontaktformuläret */
+  }
+  
+
+
+  .dropdown-content {
+    max-height: 0;
+    transition: max-height 0.5s ease;
+  }
+  .max-h-40 {
+    max-height: 160px; /* justera om du vill ha längre */
+  }
+
+  body {
+    line-height: 1.5;
+  }
+
+  @media (max-width: 768px) {
+    #hem {
+      flex-direction: column;
+    }
+  
+    .w-full.md\:w-1\/2 {
+      order: -99; /* Extremt lågt värde för att garantera att den kommer först */
+    }
+    
+    .w-full.md\:w-1\/4 {
+      order: 0; /* Standard */
+    }
+  
+    
+  }
+ 

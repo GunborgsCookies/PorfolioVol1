@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="sv" class="">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alexander Haanpää Portfolio</title>
+    <link href="../src/output.css" rel="stylesheet" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
+  
+
+    <!-- Three.js och GLTFLoader -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/108/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/mrdoob/Three.js@r92/examples/js/loaders/GLTFLoader.js"></script>
+
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Egna skript -->
+    <script src="../js/main.js" defer></script>
+    <script src="../src/parallax.js" defer></script>
+    <script src="../src/projekt.js" defer></script>
+    <script src="../src/bakgrund.js" defer></script>
+
+    <style>
+      html.dark body {
+        background-image: none !important;
+      }
+
+      .font-heading {
+        font-family: 'Poppins', sans-serif;
+      }
+
+      .font-body {
+        font-family: 'Roboto', sans-serif;
+      }
+    </style>
+  </head>
+
+  <body class="font-body text-black bg-transparent dark:bg-neutral-950 dark:text-white overflow-x-hidden transition-all duration-300">
+    
+    <!-- Header -->
+    <header class="bg-white text-black dark:bg-neutral-900 dark:text-white h-[60px] relative z-30">
+      <div class="flex justify-between items-center px-6 md:px-12 h-full max-w-7xl mx-auto">
+    <!-- Logotyp -->
+    <div class="flex items-center">
+      <img src="assets/images/logowhite.png" alt="alx Logo" class="h-8 w-auto dark:hidden"/>
+      <img src="assets/images/logoblack.png" alt="alxLogo" class="h-8 w-auto hidden dark:block"  
+      />
+    </div>
+
+      <!-- Navigation -->
+      <nav class="flex items-center gap-5 text-xs uppercase">
+        <a href="#hem" class="menu-link no-underline text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors">Hem</a>
+        <a href="#ommig" class="menu-link no-underline text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors">Om mig</a>
+        <a href="#kontakt" class="menu-link no-underline text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors">Kontakt</a>
+      </nav>
+
+      
+        
+        <!-- Dark Mode Toggle Button -->
+        <button 
+          id="toggleButton"
+          class="flex items-center gap-2 px-4 py-2 border border-black dark:border-white text-xs bg-white dark:bg-neutral-800 text-black dark:text-white transition-all"
+          onmouseenter="lookAtToggle()" 
+          onmouseleave="lookCenter()"
+        >
+          <span id="modeIcon">☀️</span>
+          <span id="modeText">Ljust läge</span>
+        </button>
+      </div>
+    </header>
+
+<!-- Hero Section -->
+<section id="hem" class="relative flex justify-center items-center h-[calc(100vh-60px)] px-6 md:px-12 gap-8 overflow-hidden bg-transparent dark:bg-neutral-900">
+  <div id="hero-overlay"
+  class="absolute inset-0 bg-transparent opacity-0 pointer-events-none z-10 transition-opacity duration-300"></div>
+
+  <!-- Left Column -->
+  <div class="w-full md:w-1/4 flex flex-col items-center text-center z-20">
+    <h2 class="text-3xl font-bold font-heading mb-4 uppercase">Grafisk design</h2>
+    <p class=" text-black dark:text-white mb-6">
+      Ett urval av mitt grafiska designarbete – från trycksaker till digitala koncept.    </p>
+      <a href="#grafiskdesign">
+        <button
+          id="portfolioBtn"
+          class="see-portfolio-button px-6 py-2 border border-black bg-white text-black text-xs dark:bg-neutral-800 dark:text-white dark:border-white transition-colors"
+          onmouseenter="lookLeft()"
+          onmouseleave="lookCenter()"
+        >
+          Visa portfolio
+        </button>
+      </a>
+  </div>
+
+  <!-- Canvas -->
+  <div class="w-full md:w-1/2 h-[100vh] relative flex items-center justify-center transform -translate-y-0 z-10">
+    <canvas id="c" class="absolute top-0 left-0 w-full h-full pointer-events-none z-10"></canvas>
+  </div>
+
+<!-- Right Column -->
+<div id="code-column" class="w-full md:w-1/4 flex flex-col items-center text-center z-20">
+  <h2 class="text-3xl font-bold font-heading mb-4 uppercase">Webbprojekt</h2>
+  <p class=" text-black dark:text-white mb-6">
+    Här hittar du några av de webbprojekt jag jobbat med under min utbildning.
+  </p>
+  <a href="#webbutveckling">
+    <button
+      class="see-projects-button px-6 py-2 border border-black bg-white text-black text-xs dark:bg-neutral-800 dark:text-white dark:border-white transition-colors"
+      onmouseenter="lookRight()"
+      onmouseleave="lookCenter()"
+    >
+      Visa projekt
+    </button>
+  </a>
+  
+</div>
+
+</section>
+
+
+
+
+
+<section id="ommig" class="py-32 px-6 md:px-12 bg-[#fdfdfd] dark:bg-[#121212] transition-colors">
+  <div class="max-w-4xl mx-auto">
+    <h2 class="text-3xl font-bold font-heading mb-4">Om mig</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+      <!-- TEXTKOLUMN -->
+      <div class="order-2 md:order-1 text-center md:text-left">
+        <p class="text-md leading-relaxed text-gray-700 dark:text-gray-300 mb-6">
+          Jag heter <strong>Alexander Haanpää</strong>, 35 år och bor i Stockholm. För närvarande studerar jag grafisk design och webbutveckling, och jag brinner för att kombinera dessa områden för att skapa visuellt tilltalande och funktionella digitala upplevelser. 
+        </p>
+        <p class="text-md leading-relaxed text-gray-700 dark:text-gray-300 mb-8">
+          Mitt intresse för grafisk design började tidigt, och jag har alltid haft en passion för att skapa designlösningar som både ser bra ut och fungerar effektivt. Genom mina studier inom både design och programmering strävar jag efter att bli en expert på att bygga både användarvänliga och stiliga digitala lösningar.
+        </p>
+        
+        
+
+        <!-- Sociala ikoner -->
+        <div class="flex justify-center md:justify-start gap-6 text-gray-600 dark:text-gray-300">
+          <a href="https://facebook.com" target="_blank" aria-label="Facebook" class="hover:text-blue-600 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M22 12.07C22 6.48 17.52 2 12 2S2 6.48 2 12.07c0 5 3.66 9.13 8.44 9.93v-7.03H8.08v-2.9h2.36v-2.2c0-2.33 1.4-3.63 3.54-3.63 1.03 0 2.1.18 2.1.18v2.3h-1.18c-1.17 0-1.53.73-1.53 1.47v1.88h2.6l-.42 2.9h-2.18V22c4.78-.8 8.44-4.93 8.44-9.93z"/>
+            </svg>
+          </a>
+          <a href="https://instagram.com" target="_blank" aria-label="Instagram" class="hover:text-pink-500 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M7.75 2C4.68 2 2 4.68 2 7.75v8.5C2 19.32 4.68 22 7.75 22h8.5C19.32 22 22 19.32 22 16.25v-8.5C22 4.68 19.32 2 16.25 2h-8.5zM12 7.25a4.75 4.75 0 1 1 0 9.5 4.75 4.75 0 0 1 0-9.5zm0 1.5a3.25 3.25 0 1 0 0 6.5 3.25 3.25 0 0 0 0-6.5zm5.5-.75a1.25 1.25 0 1 1-2.5 0 1.25 1.25 0 0 1 2.5 0z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- BILDKOLUMN -->
+      <div class="order-1 md:order-2 flex justify-center md:justify-end">
+        <img 
+          src="assets/images/IMG_2104.jpg" 
+          alt="Porträttbild på mig" 
+          class="rounded-md border border-black dark:border-white shadow-md w-72 h-72 object-cover"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- Webbutveckling -->
+<section id="webbutveckling" class="py-32 px-6 md:px-12 bg-gray-100 dark:bg-neutral-900 transition-colors">
+  <div class="max-w-4xl mx-auto">
+    <h2 class="text-3xl font-bold font-heading mb-4 uppercase">Webbprojekt</h2>
+    
+    <p class="text-md leading-relaxed text-center md:text-left text-gray-800 dark:text-gray-300 mb-6">
+      Ett urval av mina arbeten.
+    </p>
+
+    <div class="space-y-8">
+      
+      <!-- Row 1 -->
+      <div class="process-row border-t-1 border-black dark:border-white pt-5 relative group">
+        <div class="flex items-center justify-between cursor-pointer pt-1 pb-0.5">
+          <div class="flex items-center gap-4">
+            <span class="text-xl text-black dark:text-white">01</span>
+            <h3 class="text-2xl font-semibold leading-none">Stockholm Classic Poker Run</h3>
+          </div>
+          <button class="toggle-btn text-2xl text-black dark:text-white">+</button>
+        </div>
+
+        <div class="absolute -top-60 left-0 w-full hidden group-hover:flex justify-center">
+          <video class="rounded-lg w-96 shadow-lg" autoplay muted loop playsinline>
+            <source src="assets/videos/classicpokerrun.mp4" type="video/mp4" />
+          </video>
+        </div>
+
+        <div class="process-extra max-h-0 overflow-hidden transition-all duration-500 mt-4 text-gray-800 dark:text-gray-300">
+          <p>En hemsida skapad för evenemanget Stockholm Classic Poker Run. Här kan deltagare hitta information, anmäla sig via ett formulär och följa rutten direkt på en interaktiv karta.</p>
+        </div>
+      </div>
+
+      <!-- Row 2 -->
+      <div class="process-row border-t-1 border-black dark:border-white pt-5 relative group">
+        <div class="flex items-center justify-between cursor-pointer pt-1 pb-0.5">
+          <div class="flex items-center gap-4">
+            <span class="text-xl text-black dark:text-white">02</span>
+            <h3 class="text-2xl font-semibold leading-none">Portfolio Vol.1</h3>
+          </div>
+          <button class="toggle-btn text-2xl text-black dark:text-white">+</button>
+        </div>
+
+        <div class="absolute -top-60 left-0 w-full hidden group-hover:flex justify-center">
+          <video class="rounded-lg w-96 shadow-lg" autoplay muted loop playsinline>
+            <source src="assets/videos/portfolio.mp4" type="video/mp4" />
+          </video>
+        </div>
+
+        <div class="process-extra max-h-0 overflow-hidden transition-all duration-500 mt-4 text-gray-800 dark:text-gray-300">
+          <p>Min första portfolio – ett design- och kodprojekt skapat under min utbildning, med fokus på form, interaktivitet och personlig utveckling.</p>
+        </div>
+      </div>
+
+      <!-- Row 3 -->
+      <div class="process-row border-t-1 border-black dark:border-white pt-5 relative group">
+        <div class="flex items-center justify-between cursor-pointer pt-1 pb-0.5">
+          <div class="flex items-center gap-4">
+            <span class="text-xl text-black dark:text-white">03</span>
+            <h3 class="text-2xl font-semibold leading-none">Portfolio vol 2. "Pågående bygge" </h3>
+          </div>
+          <button class="toggle-btn text-2xl text-black dark:text-white">+</button>
+        </div>
+
+        <div class="absolute -top-60 left-0 w-full hidden group-hover:flex justify-center">
+          <video class="rounded-lg w-96 shadow-lg" autoplay muted loop playsinline>
+            <source src="assets/videos/space.mp4" type="video/mp4" />
+          </video>
+        </div>
+
+        <div class="process-extra max-h-0 overflow-hidden transition-all duration-500 mt-4 text-gray-800 dark:text-gray-300">
+          <p>Portfolio vol 2.<a href="../MySpaceStation/index.html" class="text-cyan-200">Gå till sidan</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Grafisk Design -->
+<section id="grafiskdesign" class="py-32 px-6 md:px-12 bg-gray-100 dark:bg-neutral-900 transition-colors">
+  <div class="max-w-4xl mx-auto">
+    <h2 class="text-3xl font-bold font-heading mb-4">Grafisk design</h2>
+    <p class="text-md leading-relaxed text-center md:text-left text-black dark:text-white mb-6">
+      Ett urval av mina grafiska projekt och mockups.
+    </p>
+
+    <!-- Grid: 2 per rad, kvadratiska bilder med linjer -->
+    <div class="grid grid-cols-1 md:grid-cols-2 border-t border-b border-black dark:border-white">
+      
+      <!-- Mockup 1 -->
+      <div class="relative group aspect-square w-full border-b md:border-r border-black dark:border-white">
+        <img src="assets/images/473371948_10170626448810123_5802961511874517813_n.jpg" alt="Mockup 1" class="w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-black/70 text-white opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-sm px-4 text-center">
+          Cykelringen – Katalog Design & Layout
+        </div>
+      </div>
+
+      <!-- Mockup 2 -->
+      <div class="relative group aspect-square w-full border-b border-black dark:border-white">
+        <img src="assets/images/Självporträtt.jpg" alt="Mockup 2" class="w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-black/70 text-white opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-sm px-4 text-center">
+          Självporträtt – Skapad under min utbildning
+        </div>
+      </div>
+
+      <!-- Mockup 3 -->
+      <div class="relative group aspect-square w-full md:border-r border-black dark:border-white">
+        <img src="assets/images/fonstermontoren.jpg" alt="Mockup 3" class="w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-black/70 text-white opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-sm px-4 text-center">
+          Logotyp – Skapad under min utbildning
+        </div>
+      </div>
+
+      <!-- Mockup 4 -->
+      <div class="relative group aspect-square w-full">
+        <img src="assets/images/Flagga.jpg" alt="Mockup 4" class="w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-black/70 text-white opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-sm px-4 text-center">
+          Fiktiv logga för \"Dackarna\" speedway – Skoluppgift i Grafisk Design
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+    
+
+
+
+<!-- Parallax Wrapper (Återinsatt original) -->
+<section id="parallax-wrapper" class="relative h-[200vh] bg-white z-10 overflow-hidden">
+  <div id="parallax-inner" class="sticky top-0 h-screen flex items-center justify-center z-10">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-6xl px-6">
+      <!-- Column 1 -->
+      <div class="flex flex-col items-center gap-6 parallax-col">
+        <img class="parallax-item col-left w-60 h-60 object-contain" src="assets/images/Logga.jpg" alt="A1">
+        <img class="parallax-item col-left w-40 h-40 object-contain" src="assets/images/dackarnaklar.png" alt="A2">
+        <img class="parallax-item col-left w-40 h-40 object-contain" src="assets/images/CarriagedrivingnordicRBlack.png" alt="A2">
+        <img class="parallax-item col-left w-40 h-40 object-contain" src="assets/images/tmt.png" alt="A2">
+        <img class="parallax-item col-left w-40 h-40 object-contain" src="assets/images/logo.png" alt="A2">
+      </div>
+      <!-- Column 2 -->
+      <div class="flex flex-col items-center gap-6 parallax-col"   src="assets/images/Logga.jpg" alt="A1">
+        <img class="parallax-item col-mid w-40 h-40 object-contain" src="assets/images/thumbnail.jpg" alt="A2">
+        <img class="parallax-item col-mid w-40 h-40 object-contain" src="assets/images/Logga.jpg" alt="A1">
+        <img class="parallax-item col-mid w-40 h-40 object-contain" src="assets/images/tmt.png" alt="A2">
+        <img class="parallax-item col-mid w-40 h-40 object-contain" src="assets/images/logo.png" alt="A2">
+        <img class="parallax-item col-mid w-40 h-40 object-contain" src="assets/images/CarriagedrivingnordicRBlack.png" alt="A2">
+        
+      </div>
+      <!-- Column 3 -->
+      <div class="flex flex-col items-center gap-6 parallax-col">
+        <img class="parallax-item col-right w-60 h-60 object-contain" src="assets/images/Logga.jpg" alt="A1">
+        <img class="parallax-item col-right w-40 h-40 object-contain" src="assets/images/dackarnaklar.png" alt="A2">
+        <img class="parallax-item col-right w-40 h-40 object-contain" src="assets/images/CarriagedrivingnordicRBlack.png" alt="A2">
+        <img class="parallax-item col-right w-40 h-40 object-contain" src="assets/images/tmt.png" alt="A2">
+        <img class="parallax-item col-right w-40 h-40 object-contain" src="assets/images/logo.png" alt="A2">
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Kontakt (utan min-h-screen för att inte paja parallaxen) -->
+<section id="contact" class="relative z-20 bg-white dark:bg-neutral-900 py-32 px-6 md:px-12 transition-colors">
+  <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+    
+    <!-- Text om kontakt -->
+    <div class="text-center md:text-left">
+      <h2 class="text-4xl font-bold mb-8 ">Kontakta mig</h2>
+      <p class="text-lg leading-relaxed text-gray-800 dark:text-gray-300">
+        Har du ett projekt på gång, en fråga, eller bara vill säga hej?  
+        Fyll i formuläret så hör jag av mig!
+      </p>
+    </div>
+
+    <!-- Formulär -->
+    <form class="space-y-4 text-center md:text-left">
+      <input 
+        type="text" 
+        name="name" 
+        placeholder="Ditt Namn" 
+        class="w-full px-4 py-2 border border-black dark:border-white bg-white dark:bg-neutral-800 text-black dark:text-white placeholder-gray-400 dark:placeholder-gray-500 rounded-md"
+      />
+      <input 
+        type="email" 
+        name="email" 
+        placeholder="Din Email" 
+        class="w-full px-4 py-2 border border-black dark:border-white bg-white dark:bg-neutral-800 text-black dark:text-white placeholder-gray-400 dark:placeholder-gray-500 rounded-md"
+      />
+      <textarea 
+        name="message" 
+        placeholder="Ditt Meddelande" 
+        rows="4" 
+        class="w-full px-4 py-2 border border-black dark:border-white bg-white dark:bg-neutral-800 text-black dark:text-white placeholder-gray-400 dark:placeholder-gray-500 rounded-md"
+      ></textarea>
+      <button 
+        type="submit" 
+        class="px-6 py-2 border border-black bg-white text-black text-xs dark:bg-neutral-800 dark:text-white dark:border-white transition-colors"
+      >
+        Skicka meddelande
+      </button>
+    </form>
+  </div>
+</section>
+
+<!-- Footer (lite mindre padding för att inte dominera scrollen efter parallaxen) -->
+<footer id="kontakt" class="relative z-20 bg-gray-100 dark:bg-neutral-800 text-black dark:text-white py-20 px-6 md:px-12 transition-colors">
+  <div class="max-w-5xl mx-auto flex flex-col items-center gap-6 text-center">
+
+    <!-- Social icons -->
+    <div class="flex justify-center md:justify-start gap-6 text-2xl">
+      <a href="https://facebook.com" target="_blank" aria-label="Facebook" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M22 12.07C22 6.48 17.52 2 12 2S2 6.48 2 12.07c0 5 3.66 9.13 8.44 9.93v-7.03H8.08v-2.9h2.36v-2.2c0-2.33 1.4-3.63 3.54-3.63 1.03 0 2.1.18 2.1.18v2.3h-1.18c-1.17 0-1.53.73-1.53 1.47v1.88h2.6l-.42 2.9h-2.18V22c4.78-.8 8.44-4.93 8.44-9.93z"/>
+        </svg>
+      </a>
+      <a href="https://instagram.com" target="_blank" aria-label="Instagram" class="hover:text-pink-500 dark:hover:text-pink-400 transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M7.75 2C4.68 2 2 4.68 2 7.75v8.5C2 19.32 4.68 22 7.75 22h8.5C19.32 22 22 19.32 22 16.25v-8.5C22 4.68 19.32 2 16.25 2h-8.5zM12 7.25a4.75 4.75 0 1 1 0 9.5 4.75 4.75 0 0 1 0-9.5zm0 1.5a3.25 3.25 0 1 0 0 6.5 3.25 3.25 0 0 0 0-6.5zm5.5-.75a1.25 1.25 0 1 1-2.5 0 1.25 1.25 0 0 1 2.5 0z"/>
+        </svg>
+      </a>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="flex flex-wrap justify-center gap-4 text-xs font-medium uppercase">
+      <a href="#hem" class="menu-link no-underline text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors">Hem</a>
+      <a href="#ommig" class="menu-link no-underline text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors">Om mig</a>
+      <a href="#skills" class="menu-link no-underline text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors">Skills</a>
+      <a href="#kontakt" class="menu-link no-underline text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors">Kontakt</a>
+    </nav>
+
+    <!-- Copyright -->
+    <p class="text-sm leading-relaxed text-neutral-500 dark:text-neutral-400">
+      © 2025 Alexander Haanpää.
+    </p>
+  </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Parallax Script -->
+    <script src="../js/parallax.js" defer></script>
+    <!-- GSAP Script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+  </body>
+</html>
