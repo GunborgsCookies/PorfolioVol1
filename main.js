@@ -26,6 +26,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const loader = new THREE.GLTFLoader();
   let ambient, light, hemiLight, shadowPlane;
 
+  const basePath = window.location.pathname.replace(/\/$/, '');
+
   function setLighting(isDark) {
     if (ambient) scene.remove(ambient);
     if (light) scene.remove(light);
@@ -51,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function loadModel(mode) {
     if (model) pivot.remove(model);
-    loader.load(`src/assets/models/${mode}_mode.glb`, (gltf) => {
+    loader.load(`${basePath}/models/${mode}_mode.glb`, (gltf) => {
       model = gltf.scene;
       const isMobile = window.innerWidth < 768;
       const scaleFactor = 0.05;
@@ -93,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (shadowPlane) pivot.remove(shadowPlane);
 
       const textureLoader = new THREE.TextureLoader();
-      const shadowTexture = textureLoader.load("src/assets/images/skugga.png");
+      const shadowTexture = textureLoader.load(`${basePath}/assets/images/skugga.png`);
 
       shadowPlane = new THREE.Mesh(
         new THREE.PlaneGeometry(2.5, 1),
