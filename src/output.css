@@ -561,6 +561,9 @@
   .text-cyan-200 {
     color: var(--color-cyan-200);
   }
+  .text-gray-500 {
+    color: var(--color-gray-500);
+  }
   .text-gray-600 {
     color: var(--color-gray-600);
   }
