@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "deploy": "gh-pages -d ."
+  },
   "dependencies": {
     "@tailwindcss/cli": "^4.1.2",
     "tailwindcss": "^4.1.2"
