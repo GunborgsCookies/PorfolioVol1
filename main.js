@@ -10,8 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
   let glitchCycleRef = null;
   let glitchTitleRef = null;
 
-  
-
   const canvas = document.querySelector("#c");
   scene = new THREE.Scene();
   camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
@@ -53,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function loadModel(mode) {
     if (model) pivot.remove(model);
-    loader.load(`./models/${mode}_mode.glb`, (gltf) => {
+    loader.load(`src/assets/models/${mode}_mode.glb`, (gltf) => {
       model = gltf.scene;
       const isMobile = window.innerWidth < 768;
       const scaleFactor = 0.05;
@@ -95,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (shadowPlane) pivot.remove(shadowPlane);
 
       const textureLoader = new THREE.TextureLoader();
-      const shadowTexture = textureLoader.load("assets/images/skugga.png");
+      const shadowTexture = textureLoader.load("src/assets/images/skugga.png");
 
       shadowPlane = new THREE.Mesh(
         new THREE.PlaneGeometry(2.5, 1),
@@ -113,7 +111,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Toggle-knappens funktionalitet för att växla mellan dark/light mode
   const toggleButton = document.getElementById("toggleButton");
   const modeIcon = document.getElementById("modeIcon");
   const modeText = document.getElementById("modeText");
@@ -124,21 +121,15 @@ document.addEventListener("DOMContentLoaded", () => {
     setLighting(isDarkMode);
     loadModel(currentMode);
 
-
-
-    
-
-
-  if (modeIcon && modeText) {
-    if (isDarkMode) {
-      modeIcon.textContent = "☀️"; // Användare kan växla till ljus läge
-      modeText.textContent = "Ljust läge";
-    } else {
-      modeIcon.textContent = "💀"; // Användare kan växla till mörkt läge
-      modeText.textContent = "Mörkt läge";
+    if (modeIcon && modeText) {
+      if (isDarkMode) {
+        modeIcon.textContent = "☀️";
+        modeText.textContent = "Ljust läge";
+      } else {
+        modeIcon.textContent = "💀";
+        modeText.textContent = "Mörkt läge";
+      }
     }
-  }
-
   });
 
   window.addEventListener("resize", () => {
@@ -226,23 +217,20 @@ document.addEventListener("DOMContentLoaded", () => {
   animate();
   startIdle();
 
-  // Hover-effekter
   function setupHover(selector, onEnter, onLeave) {
     document.querySelectorAll(selector).forEach(el => {
       el.addEventListener("mouseenter", () => {
         isHovering = true;
         onEnter();
 
-        if (el.classList.contains("see-portfolio-button")) {
-          const overlay = document.getElementById("hero-overlay");
-          if (overlay) {
-            gsap.to(overlay, {
-              opacity: 1,
-              background: "linear-gradient(90deg, rgba(0,200,255,0.6), rgba(255,0,150,0.6))",
-              duration: 0.15,
-              ease: "power1.out"
-            });
-          }
+        const overlay = document.getElementById("hero-overlay");
+        if (el.classList.contains("see-portfolio-button") && overlay) {
+          gsap.to(overlay, {
+            opacity: 1,
+            background: "linear-gradient(90deg, rgba(0,200,255,0.6), rgba(255,0,150,0.6))",
+            duration: 0.15,
+            ease: "power1.out"
+          });
         }
 
         if (el.classList.contains("see-projects-button")) {
@@ -260,10 +248,7 @@ document.addEventListener("DOMContentLoaded", () => {
               "<code class='block'>console.log</code><code class='block'>'404'</code>",
               "<code class='block'>{ port }</code><code class='block'>{ folio }</code>"
             ];
-            const glitchHeads = [
-         
-              "<h2>Webbutveckling</2h>"
-            ];
+            const glitchHeads = ["<h2>Webbutveckling</2h>"];
 
             let i = 0;
             glitchCycleRef = setInterval(() => {
@@ -276,7 +261,7 @@ document.addEventListener("DOMContentLoaded", () => {
               hTag.style.fontFamily = 'monospace';
               hTag.style.color = '#ff4d4d';
               hTag.style.fontSize = '1.1rem';
-              gsap.fromTo(hTag, { scale: 1 }, { scale: 1.3, yoyo: true, repeat: 1, duration: 0.2, ease: 'power1.inOut' });
+              gsap.fromTo(hTag, { scale: 1 }, { scale: 1.3, yoyo: true, repeat: 1, duration: 0.2 });
             }, 200);
           }
         }
@@ -292,9 +277,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const textCol = document.querySelector("#code-column");
         const pTag = textCol?.querySelector("p");
         const hTag = textCol?.querySelector("h1, h2, h3");
-        if (pTag && originalProjectText) {
-          pTag.innerHTML = originalProjectText;
-        }
+        if (pTag && originalProjectText) pTag.innerHTML = originalProjectText;
         if (hTag && originalProjectHeading) {
           hTag.textContent = originalProjectHeading;
           hTag.style.fontFamily = '';
@@ -302,7 +285,6 @@ document.addEventListener("DOMContentLoaded", () => {
           hTag.style.fontSize = '';
         }
 
-        // 🧼 Återställ overlay
         const overlay = document.getElementById("hero-overlay");
         if (overlay) {
           gsap.to(overlay, {
