@@ -250,7 +250,7 @@ document.addEventListener("DOMContentLoaded", () => {
               "<code class='block'>console.log</code><code class='block'>'404'</code>",
               "<code class='block'>{ port }</code><code class='block'>{ folio }</code>"
             ];
-            const glitchHeads = ["<h2>Webbutveckling</2h>"];
+            const glitchHeads = ["<h2>Webbprojekt</2h>"];
 
             let i = 0;
             glitchCycleRef = setInterval(() => {
