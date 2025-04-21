@@ -1,0 +1,17 @@
+# Node modules (skapas av npm install)
+node_modules/
+
+# Byggd output (vite build lägger filer här)
+dist/
+
+# Loggfiler
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# OS/mac/win systemfiler
+.DS_Store
+Thumbs.db
+
+# Miljöfiler
+.env
